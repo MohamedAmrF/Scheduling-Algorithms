@@ -10,14 +10,15 @@ struct process
     int burstTime;
     int arrivalTime;
 
-    // stats
+    // Accounting Info
     int startTime;
     int completionTime;
     int waitingTime;
     int turnaroundTime;
     int responseTime;
-    int BURSTTIMECONST;
+    const int BURSTTIMECONST; // to store the burst time
     bool firsTime = true;
+    //////////////////////////////////
 
     bool operator > (const process& rhs) const {
         if (priority == rhs.priority)
@@ -45,7 +46,7 @@ struct process
 
 };
 
-void drawGanttChart(vector<int>& Chart)
+void drawGanttChart(vector<int>& Chart) // Draws Gantt Chart from a vector of process ids (PIDs), 
 {
     cout << "Gant Chart : \n";
     cout << "| ";
@@ -76,7 +77,7 @@ int main()
     cout << "Enter The number of processes: ";
     cin >> n;
     vector<process>processes(n);
-    vector<vector<process>>timestamped_processes(TIMELINE_MAX);
+    vector<vector<process>>timestamped_processes(TIMELINE_MAX); // Each row is for a certain timestamp, and each column is for the processes that are ready at this time
     int completed = 0, totalTime = 0;
 
     for (int i = 0; i < n; i++)
@@ -87,6 +88,7 @@ int main()
         cout << "Enter Priority, Burst Time, and Arrival Time respectively: ";
         cin >> processes[i].priority >> processes[i].burstTime >> processes[i].arrivalTime;
         processes[i].BURSTTIMECONST = processes[i].burstTime;
+
         timestamped_processes[processes[i].arrivalTime].push_back(processes[i]);
         totalTime += processes[i].burstTime;
     }
